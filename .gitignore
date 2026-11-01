@@ -1,0 +1,28 @@
+# Secrets
+.env
+.claude/settings.local.json
+
+# Config template (excluded per request — placeholders only, not tracked)
+.env.example
+
+# Data artifacts (vector store + databases)
+data/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# Logs
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
