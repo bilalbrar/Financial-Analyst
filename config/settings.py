@@ -35,8 +35,10 @@ ALPHAVANTAGE_OUTPUTSIZE = os.getenv("ALPHAVANTAGE_OUTPUTSIZE", "compact")
 
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
-GROQ_FAST_MODEL = os.getenv("GROQ_FAST_MODEL", "llama-3.1-8b-instant")
-GROQ_LARGE_MODEL = os.getenv("GROQ_LARGE_MODEL", "llama-3.3-70b-versatile")
+# Groq retires models periodically — verify with `python tests/llm.py` or the
+# models list (https://console.groq.com/docs/models) and override in .env.
+GROQ_FAST_MODEL = os.getenv("GROQ_FAST_MODEL", "openai/gpt-oss-20b")
+GROQ_LARGE_MODEL = os.getenv("GROQ_LARGE_MODEL", "openai/gpt-oss-120b")
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 OLLAMA_FAST_MODEL = os.getenv("OLLAMA_FAST_MODEL", "phi3:mini")
 OLLAMA_LARGE_MODEL = os.getenv("OLLAMA_LARGE_MODEL", "mistral:7b-instruct")
