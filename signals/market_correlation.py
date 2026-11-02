@@ -255,8 +255,8 @@ def detect_signals(sector: str, df: pd.DataFrame, stats: dict) -> list[dict]:
         "severity": "info",
         "headline": f"News→price link: {stats['link_confidence']}",
         "detail": (
-            f"r={stats['r_same']:+.2f} between driver-entity news and |{inst} daily move| "
-            f"over {stats['n']} days"
+            (f"r={stats['r_same']:+.2f}" if stats.get("r_same") is not None else "r=n/a")
+            + f" between driver-entity news and |{inst} daily move| over {stats['n']} days"
             + (f"; next-day r={stats['r_next']:+.2f}." if stats.get("r_next") is not None else ".")
         ),
         "value": stats["r_same"],

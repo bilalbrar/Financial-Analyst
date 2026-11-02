@@ -63,6 +63,11 @@ def _llm():
     )
 
 
+def _fmt_r(r) -> str:
+    """Format a correlation that may be None (sectors with prices but no news overlap)."""
+    return f"{r:+.2f}" if r is not None else "n/a"
+
+
 def build_global_snapshot(stats_by_sector: dict) -> str:
     """One summary line per sector so the guru can field cross-sector questions."""
     L = ["ALL-SECTOR SNAPSHOT (summary; detailed context for the focused sector follows):"]
@@ -74,7 +79,7 @@ def build_global_snapshot(stats_by_sector: dict) -> str:
         amp = st.get("amplification")
         amp_txt = f"{amp:.1f}x" if amp else "n/a"
         L.append(
-            f"- {s} ({inst}): link r={st['r_same']:+.2f} ({st['link_confidence']}), "
+            f"- {s} ({inst}): link r={_fmt_r(st['r_same'])} ({st['link_confidence']}), "
             f"{amp_txt} vol on news-spike days, regime {st['vol_regime']}, "
             f"last {st['last_close']:.2f} ({st['last_ret']:+.2f}%/1d), "
             f"news-spike today: {'yes' if st['spike_today'] else 'no'}"
@@ -92,8 +97,8 @@ def build_context(sector, stats, signals, entities, headlines, moves) -> str:
             f"- as of {stats['last_date']}: close {stats['last_close']:.2f}, "
             f"1d {stats['last_ret']:+.2f}%"
             + (f", 5d {stats['ret_5d']:+.2f}%" if stats.get("ret_5d") is not None else ""),
-            f"- news->price correlation r={stats['r_same']:+.2f} same-day, "
-            f"r={stats['r_next']:+.2f} next-day over {stats['n']} trading days "
+            f"- news->price correlation r={_fmt_r(stats['r_same'])} same-day, "
+            f"r={_fmt_r(stats['r_next'])} next-day over {stats['n']} trading days "
             f"(link is '{stats['link_confidence']}')",
             f"- on news-spike days the instrument moves {stats['spike_absret']:.1f}% "
             f"vs {stats['normal_absret']:.1f}% normal"
